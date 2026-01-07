@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinSight AI - Smart Financial Intelligence Platform</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo">
+          <span class="logo-icon">💎</span>
+          <span class="logo-text">FinSight AI</span>
+        </div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#demo">Demo</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Smart Financial Intelligence
+          <span class="gradient-text">Powered by AI</span>
+        </h1>
+        <p class="hero-subtitle">
+          Transform your bank statements into actionable insights with
+          AI-powered analysis. Get intelligent categorization, personalized
+          budgets, and data-driven financial recommendations.
+        </p>
+        <div class="hero-buttons">
+          <button class="btn-hero-primary" onclick="scrollToDemo()">
+            Try Demo →
+          </button>
+          <a
+            href="https://github.com/yourusername/finsight-ai"
+            class="btn-hero-secondary"
+            target="_blank"
+          >
+            ⭐ View on GitHub
+          </a>
+        </div>
+        <div class="tech-stack">
+          <span class="tech-badge">Flask</span>
+          <span class="tech-badge">Groq AI</span>
+          <span class="tech-badge">Llama 3.3</span>
+          <span class="tech-badge">Chart.js</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+      <div class="container">
+        <h2 class="section-title">Key Features</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>AI Transaction Categorization</h3>
+            <p>
+              Automatically categorizes expenses using advanced Llama 3.3 AI
+              model for accurate financial tracking
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Interactive Visualizations</h3>
+            <p>
+              Beautiful charts and graphs that make understanding your spending
+              patterns easy and intuitive
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <h3>Personalized Insights</h3>
+            <p>
+              Get actionable recommendations tailored to your unique spending
+              habits and financial goals
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💰</div>
+            <h3>Smart Budget Suggestions</h3>
+            <p>
+              AI-generated budget recommendations based on your actual spending
+              patterns and income
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Privacy First</h3>
+            <p>
+              Your data is processed securely and never stored permanently on
+              our servers
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Lightning Fast</h3>
+            <p>
+              Powered by Groq's ultra-fast inference for instant analysis and
+              real-time results
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+      <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Upload Your Data</h3>
+              <p>
+                Upload a CSV file with your bank transactions or try with sample
+                data
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>AI Analysis</h3>
+              <p>
+                Llama 3.3 AI analyzes patterns, categorizes transactions, and
+                identifies insights
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Get Insights</h3>
+              <p>
+                View visualizations, budgets, and personalized financial
+                recommendations
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+      <div class="container">
+        <h2 class="section-title">Try It Now</h2>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+          <div class="upload-box" id="uploadBox">
+            <div class="upload-icon">📁</div>
+            <h3>Upload Bank Statement</h3>
+            <p>Drag & drop your CSV file here or click to browse</p>
+            <p class="upload-hint">
+              Expected format: date, description, amount
+            </p>
+            <input type="file" id="fileInput" accept=".csv,.txt" hidden />
+            <button
+              class="btn-upload"
+              onclick="document.getElementById('fileInput').click()"
+            >
+              Choose File
+            </button>
+          </div>
+          <div class="file-info" id="fileInfo" style="display: none">
+            <p class="file-selected">✓ Selected: <span id="fileName"></span></p>
+            <button class="btn-analyze" id="analyzeBtn">
+              Analyze Transactions
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading" style="display: none">
+          <div class="spinner"></div>
+          <p>Analyzing your transactions with AI...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results" id="results" style="display: none">
+          <!-- Summary Cards -->
+          <div class="summary-cards">
+            <div class="summary-card">
+              <div class="card-icon">💵</div>
+              <div class="card-content">
+                <p class="card-label">Total Spending</p>
+                <p class="card-value" id="totalSpending">$0</p>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="card-icon">📂</div>
+              <div class="card-content">
+                <p class="card-label">Categories</p>
+                <p class="card-value" id="categoryCount">0</p>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="card-icon">📝</div>
+              <div class="card-content">
+                <p class="card-label">Transactions</p>
+                <p class="card-value" id="transactionCount">0</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="charts-container">
+            <div class="chart-box">
+              <h3>Spending by Category</h3>
+              <canvas id="categoryChart"></canvas>
+            </div>
+            <div class="chart-box">
+              <h3>Budget vs Actual Spending</h3>
+              <canvas id="budgetChart"></canvas>
+            </div>
+          </div>
+
+          <!-- AI Insights -->
+          <div class="insights-section">
+            <h3>🤖 AI-Powered Financial Insights</h3>
+            <div id="insightsList"></div>
+          </div>
+
+          <!-- Subscriptions Section -->
+          <div
+            class="subscriptions-section"
+            id="subscriptionsSection"
+            style="display: none"
+          >
+            <h3>💳 Detected Subscriptions</h3>
+            <div class="subscription-summary">
+              <p>
+                Monthly Cost:
+                <span id="subscriptionTotal" class="highlight">$0</span>
+              </p>
+              <p>Active Subscriptions: <span id="subscriptionCount">0</span></p>
+            </div>
+            <div id="subscriptionsList"></div>
+          </div>
+
+          <!-- Anomalies Section -->
+          <div
+            class="anomalies-section"
+            id="anomaliesSection"
+            style="display: none"
+          >
+            <h3>🔔 Unusual Spending Detected</h3>
+            <div id="anomaliesList"></div>
+          </div>
+
+          <!-- Savings Goals Section -->
+          <div
+            class="savings-goals-section"
+            id="savingsGoalsSection"
+            style="display: none"
+          >
+            <h3>🎯 Personalized Savings Goals</h3>
+            <div id="savingsGoalsList"></div>
+            <div class="savings-tips">
+              <h4>💡 Savings Tips</h4>
+              <div id="savingsTips"></div>
+            </div>
+          </div>
+
+          <!-- Transactions Table -->
+          <div class="transactions-section">
+            <h3>Categorized Transactions</h3>
+            <div class="table-container">
+              <table id="transactionsTable">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="transactionsBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Data Button -->
+        <div class="sample-data-section">
+          <p>Don't have a CSV file ready?</p>
+          <button class="btn-sample" id="sampleDataBtn">Use Sample Data</button>
+        </div>
+
+        <!-- Export & Chat Actions -->
+        <div class="action-buttons" id="actionButtons" style="display: none">
+          <button class="btn-action btn-export" id="exportPdfBtn">
+            📄 Export PDF Report
+          </button>
+
+          <button class="btn-action btn-chat" id="openChatBtn">
+            💬 Chat with AI Assistant
+          </button>
+
+          <!-- NEW: Reset / New Analysis -->
+          <button class="btn-action btn-reset" id="newAnalysisBtn">
+            🔄 New Analysis
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Chat Modal -->
+    <div class="chat-modal" id="chatModal">
+      <div class="chat-container">
+        <div class="chat-header">
+          <h3>💬 AI Financial Assistant</h3>
+          <button class="chat-close" id="closeChatBtn">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-message bot">
+            <div class="message-content">
+              Hi! I'm your AI financial assistant. Ask me anything about your
+              finances! 💰
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-container">
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Ask about your spending, savings, or budget..."
+            autocomplete="off"
+          />
+          <button id="sendChatBtn">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>💎 FinSight AI</h4>
+            <p>
+              AI-powered financial intelligence platform for smart money
+              management
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4>Technology</h4>
+            <ul>
+              <li>Flask (Python)</li>
+              <li>Groq AI (Llama 3.3)</li>
+              <li>Chart.js</li>
+              <li>Vanilla JavaScript</li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Connect</h4>
+            <ul>
+              <li>
+                <a href="https://github.com/yourusername" target="_blank"
+                  >GitHub</a
+                >
+              </li>
+              <li>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank"
+                  >LinkedIn</a
+                >
+              </li>
+              <li>
+                <a href="https://yourportfolio.com" target="_blank"
+                  >Portfolio</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            © 2025 FinSight AI. A portfolio project showcasing full-stack
+            development and AI integration with Groq (Llama 3.3 70B).
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
